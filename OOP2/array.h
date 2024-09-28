@@ -1,11 +1,5 @@
 ﻿#pragma once
 #include "number.h"
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <cmath>
-
-using namespace std;
 
 class Array
 {
