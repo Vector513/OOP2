@@ -19,7 +19,31 @@ Complex::Complex(double re, double im)
 
 Complex::~Complex() {}
 
-ostream& operator << (ostream& output, const Complex& complex)
+double Complex::mod() const
+{
+	return sqrt(re * re + im * im);
+}
+
+double Complex::arg() const
+{
+	return asin(im / mod());
+}
+
+Complex Complex::pow(double exponent) const
+{
+	return Complex{ std::pow(mod(), exponent) * std::cos(arg() * exponent), std::pow(mod(), exponent) * std::sin(arg() * exponent)};
+}
+
+Complex pow(const Complex& base, double exponent) {
+	return base.pow(exponent);
+}
+
+Complex sqrt(const Complex& base) 
+{
+	return base.pow(0.5);
+}
+
+std::ostream& operator << (std::ostream& output, const Complex& complex)
 {
 	output << complex.re;
 
@@ -33,15 +57,14 @@ ostream& operator << (ostream& output, const Complex& complex)
 	return output;
 }
 
-istream& operator >> (istream& input, Complex& complex) 
+std::istream& operator >> (std::istream& input, Complex& complex) 
 {
-	cout << "¬ведите число: ";
 	input >> complex.re >> complex.im;
 
 	return input;
 }
 
-Complex& Complex::operator = (const Complex& other) 
+Complex& Complex::operator = (const Complex& other)
 {
 	if (this != &other) {
 		re = other.re;
@@ -65,6 +88,11 @@ Complex Complex::operator * (const double coef) const
 	return Complex{ re * coef, im * coef };
 }
 
+Complex operator * (double coef, const Complex& other) 
+{
+	return Complex{ other.re * coef, other.im * coef };
+}
+
 Complex Complex::operator * (const Complex& other) const
 {
 	return Complex{ re * other.re - im * other.im, re * other.im + im * other.re };
@@ -80,9 +108,9 @@ Complex Complex::operator / (const Complex& other) const
 	return Complex{ (re * other.re + im * other.im) / (other.re * other.re + other.im * other.im), (other.re * im - re * other.im) / (other.re * other.re + other.im * other.im) };
 }
 
-Complex Complex::operator - (const Complex& other) const
+Complex Complex::operator - () const
 {
-	return Complex{ re - other.re, im - other.im };
+	return Complex{ -re, -im };
 }
 
 Complex& Complex::operator += (const Complex& other) 
@@ -143,3 +171,44 @@ bool Complex::operator != (const Complex& other) const
 	return !(*this == other);
 }
 
+bool Complex::operator > (const Complex& other) const 
+{
+	if (mod() > other.mod()) {
+		return true;
+	}
+	return false;
+}
+
+bool Complex::operator >= (const Complex& other) const 
+{
+	if (mod() > other.mod()) {
+		return true;
+	}
+	else if (mod() == other.mod()) {
+		if (arg() >= other.arg()) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool Complex::operator < (const Complex& other) const
+{
+	if (mod() < other.mod()) {
+		return true;
+	}
+	return false;
+}
+
+bool Complex::operator <= (const Complex& other) const
+{
+	if (mod() < other.mod()) {
+		return true;
+	}
+	else if (mod() == other.mod()) {
+		if (arg() <= other.arg()) {
+			return true;
+		}
+	}
+	return false;
+}
