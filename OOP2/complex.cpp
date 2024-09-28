@@ -45,14 +45,7 @@ Complex sqrt(const Complex& base)
 
 std::ostream& operator << (std::ostream& output, const Complex& complex)
 {
-	output << complex.re;
-
-	if (complex.im > 0) {
-		output << " + " << complex.im << "i";
-	}
-	else if (complex.im < 0) {
-		output << " - " << complex.im << "i";
-	}
+	output << complex.re << " + " << complex.im << "i";
 
 	return output;
 }
