@@ -7,14 +7,12 @@ int main()
 	SetConsoleOutputCP(1251);
 	setlocale(LC_ALL, "Russian");
 
-	Complex a(4.0, 6.0), b(2.5, -3.0), c;
+	Complex a(4.0, 6.0), b(2.5, -3.0), c, d(4, 5.8);
 	b = a;
 	c = a + b;
-	cout << a << ' ' << b << ' ' << c;
-	
-	int d = 0, e = 1, g = 2;
-	d += e += g += d;
-	cout << d;
+	double h = 8.3;
+	c = c * h;
+	cout << a << ' ' << b << ' ' << c << (d < a) << (d > a) << (a >= a) << (b > b);
 
 	Application app;
 	app.run();
