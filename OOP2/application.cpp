@@ -1,4 +1,5 @@
-#include "application.h"
+#include "Application.h"
+#include <iostream>
 
 Application::Application() : array() {}
 
